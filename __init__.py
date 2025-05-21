@@ -19,6 +19,15 @@ def encryptage(valeur):
     valeur_bytes = valeur.encode()  # Conversion str -> bytes
     token = f.encrypt(valeur_bytes)  # Encrypt la valeur
     return f"Valeur encryptée : {token.decode()}"  # Retourne le token en str
+
+@app.route('/decrypt/<path:valeur_chiffree>')
+def decryptage(valeur_chiffree):
+    try:
+        valeur_bytes = valeur_chiffree.encode()
+        valeur_dechiffree = f.decrypt(valeur_bytes)
+        return f"Chaîne déchiffrée : {valeur_dechiffree.decode()}"
+    except Exception as e:
+        return f"Erreur : la chaîne fournie n'est pas valide ou la clé est incorrecte. Détail : {str(e)}"
                                                                                                                                                      
 if __name__ == "__main__":
   app.run(debug=True)
