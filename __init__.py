@@ -6,7 +6,18 @@ from urllib.request import urlopen
 import sqlite3
                                                                                                                                        
 app = Flask(__name__)                                                                                                                  
-                                                                                                                                       
+
+# Génère une clé une seule fois
+def load_key():
+    if not os.path.exists("secret.key"):
+        key = Fernet.generate_key()
+        with open("secret.key", "wb") as key_file:
+            key_file.write(key)
+    else:
+        with open("secret.key", "rb") as key_file:
+            key = key_file.read()
+    return key
+
 @app.route('/')
 def hello_world():
     return render_template('hello.html')
